@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 
 # Create your views here.
 from core.models import Evento
@@ -11,3 +11,15 @@ def evento(request, titulo_evento):
     except Evento.DoesNotExist:
         texto = '<h1>Evento não localizado! Tente escrever novamente.<h1>'
     return HttpResponse(texto)
+
+
+def lista_eventos(request):
+    usuario = request.user
+    ##evento = Evento.objects.filter(usuario=usuario)
+    evento = Evento.objects.all()
+    dados = {'eventos': evento}
+    return render(request, 'agenda.html', dados)
+
+
+# def index(request):
+#     return redirect('/agenda/')
